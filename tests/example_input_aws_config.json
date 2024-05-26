@@ -1,0 +1,28 @@
+{
+    "ec2_subnet_ids": [
+        "subnet-aaaaaaaaaaaaaaaaa",
+        "subnet-bbbbbbbbbbbbbbbbb"
+    ],
+    "security_group": {
+        "EmrManagedMaster": "sg-00000000000000000",
+        "EmrManagedSlave": "sg-11111111111111111",
+        "ServiceAccess": "sg-aaaaaaaaaaaaaaaaa"
+    },
+    "log_uri": "s3://aws-logs-1234567890-eu-central-1/elasticmapreduce/",
+    "tags": [
+        {
+            "Key": "project",
+            "Value": "emre"
+        }
+    ],
+    "launch_specifications": {
+        "OnDemandSpecification": {
+            "AllocationStrategy": "lowest-price"
+        },
+        "SpotSpecification": {
+            "TimeoutDurationMinutes": 5,
+            "TimeoutAction": "TERMINATE_CLUSTER",
+            "AllocationStrategy": "price-capacity-optimized"
+        }
+    }
+}

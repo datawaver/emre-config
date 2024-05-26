@@ -1,0 +1,426 @@
+{
+    "Name": "template_1",
+    "ReleaseLabel": "emr-7.0.0",
+    "Applications": [
+        {
+            "Name": "Spark"
+        },
+        {
+            "Name": "AmazonCloudWatchAgent"
+        }
+    ],
+    "ServiceRole": "EMR_DefaultRole",
+    "JobFlowRole": "EMR_EC2_DefaultRole",
+    "Tags": [
+        {
+            "Key": "project",
+            "Value": "emre"
+        }
+    ],
+    "LogUri": "s3://aws-logs-1234567890-eu-central-1/elasticmapreduce/",
+    "EbsRootVolumeSize": 15,
+    "Instances": {
+        "KeepJobFlowAliveWhenNoSteps": true,
+        "TerminationProtected": false,
+        "Ec2SubnetIds": [
+            "subnet-aaaaaaaaaaaaaaaaa",
+            "subnet-bbbbbbbbbbbbbbbbb"
+        ],
+        "EmrManagedMasterSecurityGroup": "sg-00000000000000000",
+        "EmrManagedSlaveSecurityGroup": "sg-11111111111111111",
+        "ServiceAccessSecurityGroup": "sg-aaaaaaaaaaaaaaaaa",
+        "InstanceFleets": [
+            {
+                "InstanceFleetType": "MASTER",
+                "TargetOnDemandCapacity": 0,
+                "TargetSpotCapacity": 1,
+                "InstanceTypeConfigs": [
+                    {
+                        "InstanceType": "m5.xlarge",
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "InstanceType": "m5a.xlarge",
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "InstanceType": "m6a.xlarge",
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "InstanceType": "m6g.xlarge",
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 1
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "InstanceType": "m7g.xlarge",
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 1
+                                }
+                            ]
+                        }
+                    }
+                ]
+            },
+            {
+                "InstanceFleetType": "CORE",
+                "TargetOnDemandCapacity": 0,
+                "TargetSpotCapacity": 3,
+                "InstanceTypeConfigs": [
+                    {
+                        "InstanceType": "m5.xlarge",
+                        "WeightedCapacity": 3,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 2
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "3",
+                                    "yarn.nodemanager.resource.memory-mb": "12288"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m5a.xlarge",
+                        "WeightedCapacity": 3,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 2
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "3",
+                                    "yarn.nodemanager.resource.memory-mb": "12288"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m6a.xlarge",
+                        "WeightedCapacity": 3,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 2
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "3",
+                                    "yarn.nodemanager.resource.memory-mb": "12288"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m6g.xlarge",
+                        "WeightedCapacity": 3,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 2
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "3",
+                                    "yarn.nodemanager.resource.memory-mb": "12288"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m7g.xlarge",
+                        "WeightedCapacity": 3,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 32
+                                    },
+                                    "VolumesPerInstance": 2
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "3",
+                                    "yarn.nodemanager.resource.memory-mb": "12288"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "LaunchSpecifications": {
+                    "OnDemandSpecification": {
+                        "AllocationStrategy": "lowest-price"
+                    },
+                    "SpotSpecification": {
+                        "TimeoutDurationMinutes": 5,
+                        "TimeoutAction": "TERMINATE_CLUSTER",
+                        "AllocationStrategy": "price-capacity-optimized"
+                    }
+                }
+            },
+            {
+                "InstanceFleetType": "TASK",
+                "TargetOnDemandCapacity": 0,
+                "TargetSpotCapacity": 63,
+                "InstanceTypeConfigs": [
+                    {
+                        "InstanceType": "m5.16xlarge",
+                        "WeightedCapacity": 63,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 256
+                                    },
+                                    "VolumesPerInstance": 4
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "63",
+                                    "yarn.nodemanager.resource.memory-mb": "258048"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m5a.16xlarge",
+                        "WeightedCapacity": 63,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 256
+                                    },
+                                    "VolumesPerInstance": 4
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "63",
+                                    "yarn.nodemanager.resource.memory-mb": "258048"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m6a.16xlarge",
+                        "WeightedCapacity": 63,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 256
+                                    },
+                                    "VolumesPerInstance": 4
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "63",
+                                    "yarn.nodemanager.resource.memory-mb": "258048"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m6g.16xlarge",
+                        "WeightedCapacity": 63,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 256
+                                    },
+                                    "VolumesPerInstance": 4
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "63",
+                                    "yarn.nodemanager.resource.memory-mb": "258048"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "InstanceType": "m7g.16xlarge",
+                        "WeightedCapacity": 63,
+                        "EbsConfiguration": {
+                            "EbsBlockDeviceConfigs": [
+                                {
+                                    "VolumeSpecification": {
+                                        "VolumeType": "gp3",
+                                        "SizeInGB": 256
+                                    },
+                                    "VolumesPerInstance": 4
+                                }
+                            ]
+                        },
+                        "Configurations": [
+                            {
+                                "Classification": "yarn-site",
+                                "Properties": {
+                                    "yarn.nodemanager.resource.cpu-vcores": "63",
+                                    "yarn.nodemanager.resource.memory-mb": "258048"
+                                }
+                            }
+                        ]
+                    }
+                ],
+                "LaunchSpecifications": {
+                    "OnDemandSpecification": {
+                        "AllocationStrategy": "lowest-price"
+                    },
+                    "SpotSpecification": {
+                        "TimeoutDurationMinutes": 5,
+                        "TimeoutAction": "TERMINATE_CLUSTER",
+                        "AllocationStrategy": "price-capacity-optimized"
+                    }
+                }
+            }
+        ]
+    },
+    "Configurations": [
+        {
+            "Classification": "yarn-site",
+            "Properties": {
+                "yarn.scheduler.maximum-allocation-vcores": "2147483647",
+                "yarn.scheduler.maximum-allocation-mb": "2147483647",
+                "yarn.nodemanager.aux-services": ""
+            }
+        },
+        {
+            "Classification": "spark-defaults",
+            "Properties": {
+                "spark.yarn.heterogeneousExecutors.enabled": "true",
+                "spark.executor.maxCores": "4",
+                "spark.executor.cores": "1",
+                "spark.executor.memory": "3449m",
+                "spark.executor.memoryOverhead": "647m",
+                "spark.dynamicAllocation.enabled": "true",
+                "spark.dynamicAllocation.minExecutors": "1024",
+                "spark.dynamicAllocation.shuffleTracking.enabled": "true",
+                "spark.shuffle.service.enabled": "false",
+                "spark.decommission.enabled": "true",
+                "spark.storage.decommission.enabled": "true",
+                "spark.hive.metastore.client.factory.class": "com.amazonaws.glue.catalog.metastore.AWSGlueDataCatalogHiveClientFactory",
+                "spark.hadoop.aws.glue.catalog.separator": "/",
+                "spark.default.parallelism": "66",
+                "spark.sql.shuffle.partitions": "66"
+            }
+        },
+        {
+            "Classification": "spark-log4j2",
+            "Properties": {
+                "logger.TaskSetManager.name": "org.apache.spark.scheduler.TaskSetManager",
+                "logger.TaskSetManager.level": "WARN"
+            }
+        }
+    ],
+    "AutoTerminationPolicy": {
+        "IdleTimeout": 1800
+    }
+}
