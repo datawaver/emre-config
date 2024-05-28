@@ -1,7 +1,8 @@
-from dataclasses import dataclass
 import json
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List
+
 
 @dataclass
 class TargetFlowParameters:
@@ -32,4 +33,3 @@ class AWSParameters:
                 tags=config["tags"],
                 launch_specifications=config["launch_specifications"],
             )
-

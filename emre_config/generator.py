@@ -1,28 +1,19 @@
-from email.policy import default
 import math
 from dataclasses import dataclass, field
+from enum import Enum
 from typing import Any, List
 
 
-@dataclass
-class AWSInstanceClasses:
-    m4: bool = False  # why?
-    m5: bool = True
-    m5a: bool = True
-    m6a: bool = True
-    m6i: bool = False  # Reason: jdk17: JDK-8321599 Data loss in AVX3 Base64 decoding
-    m6g: bool = True
-    m7a: bool = False  # Reason: jdk17: JDK-8321599 Data loss in AVX3 Base64 decoding
-    m7i: bool = False  # Reason: jdk17: JDK-8321599 Data loss in AVX3 Base64 decoding
-    m7g: bool = True
-
-    @classmethod
-    def good_ones(cls) -> List[str]:
-        true_fields = []
-        for f in dir(cls):  # Renamed the loop variable 'field' to 'f'
-            if isinstance(getattr(cls, f), bool) and getattr(cls, f):
-                true_fields.append(f)
-        return true_fields
+class InstanceClass(Enum):
+    # m4: bool = False  # why?
+    M5 = "m5"
+    M5A = "m5a"
+    M6A = "m6a"
+    # m6i:  # Reason: jdk17: JDK-8321599 Data loss in AVX3 Base64 decoding
+    M6G = "m6g"
+    # m7a:  # Reason: jdk17: JDK-8321599 Data loss in AVX3 Base64 decoding
+    # m7i:  # Reason: jdk17: JDK-8321599 Data loss in AVX3 Base64 decoding
+    M7G = "m7g"
 
 
 @dataclass
@@ -41,8 +32,12 @@ class ConfigGenerator:
     task_instance_count: int = field(init=False)
 
     def __post_init__(self):
-        self.core_instance_cores = self._worker_instance_cores(True, self.core_instance_size)
-        self.task_instance_cores = self._worker_instance_cores(False, self.task_instance_size)
+        self.core_instance_cores = self._worker_instance_cores(
+            True, self.core_instance_size
+        )
+        self.task_instance_cores = self._worker_instance_cores(
+            False, self.task_instance_size
+        )
         self.task_instance_count = math.ceil(
             (self.worker_cores - self.core_instance_count * self.core_instance_cores)
             / self.task_instance_cores
@@ -68,7 +63,7 @@ class ConfigGenerator:
                         ],
                     ),
                 )
-                for instance_class in AWSInstanceClasses.good_ones()
+                for instance_class in [ic.value for ic in InstanceClass]
             ],
         )
 
@@ -78,9 +73,15 @@ class ConfigGenerator:
         launch_specifications: dict,
     ) -> dict:
         spot: bool = self.is_core_spot if core else self.is_task_spot
-        instance_count: int = self.core_instance_count if core else self.task_instance_count
-        instance_cores: int = self.core_instance_cores if core else self.task_instance_cores
-        instance_size: int = self.core_instance_size if core else self.task_instance_size
+        instance_count: int = (
+            self.core_instance_count if core else self.task_instance_count
+        )
+        instance_cores: int = (
+            self.core_instance_cores if core else self.task_instance_cores
+        )
+        instance_size: int = (
+            self.core_instance_size if core else self.task_instance_size
+        )
         return dict(
             InstanceFleetType="CORE" if core else "TASK",
             TargetOnDemandCapacity=instance_count * instance_cores if not spot else 0,
@@ -89,11 +90,11 @@ class ConfigGenerator:
                 self._worker_instance_configuration(
                     instance_class, instance_size, instance_cores
                 )
-                for instance_class in AWSInstanceClasses.good_ones()
+                for instance_class in [ic.value for ic in InstanceClass]
             ],
             LaunchSpecifications=launch_specifications,
         )
-        
+
     def get_configurations(self) -> List[dict]:
         return [
             dict(
@@ -146,7 +147,7 @@ class ConfigGenerator:
                 },
             ),
         ]
-    
+
     @staticmethod
     def _worker_instance_cores(core_type: bool, instance_size: int) -> int:
         """
@@ -166,8 +167,8 @@ class ConfigGenerator:
         return usable_cores
 
     @classmethod
-    def _worker_instance_configuration(cls,
-        instance_class: str, instance_size: int, instance_cores: int
+    def _worker_instance_configuration(
+        cls, instance_class: str, instance_size: int, instance_cores: int
     ) -> dict:
         """
         Generate the configuration for a worker instance.
@@ -208,7 +209,7 @@ class ConfigGenerator:
                 ),
             ],
         )
-        
+
     @staticmethod
     def _default_instance_storage(instance_size: int) -> tuple[int, int]:
         """
@@ -228,7 +229,7 @@ class ConfigGenerator:
             volume_count = math.ceil(target_size / volume_size)
         return volume_count, volume_size
 
-        
+
 # TODO: usage ?
 def hdfs_replication_level(number_of_core_nodes: int) -> int:
     return 1 if number_of_core_nodes < 4 else (2 if number_of_core_nodes < 10 else 3)

@@ -1,7 +1,7 @@
 import json
 import click
 from emre_config.run_job_flow_request import run_job_flow_request
-from emre_config.structures import TargetFlowParameters, AWSParameters
+from emre_config.parameters import TargetFlowParameters, AWSParameters
 
 
 @click.command()

@@ -1,7 +1,7 @@
 from emre_config.generator import (
     ConfigGenerator,
 )
-from emre_config.structures import AWSParameters, TargetFlowParameters
+from emre_config.parameters import AWSParameters, TargetFlowParameters
 
 
 def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> dict:
