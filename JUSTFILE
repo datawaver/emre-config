@@ -6,7 +6,6 @@ default:
     just --list
 
 init:
-    poetry update
     poetry install
     
 test:
@@ -14,3 +13,6 @@ test:
 
 run:
     poetry run emre-config
+
+validate:
+    poetry run ruff check emre_config tests
