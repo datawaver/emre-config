@@ -5,7 +5,6 @@ from emre_config.parameters import AWSParameters, TargetFlowParameters
 
 
 def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> dict:
-
     config = ConfigGenerator(
         is_master_spot=target.master_spot,
         is_core_spot=target.core_spot,

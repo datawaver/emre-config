@@ -1,7 +1,7 @@
 import math
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, List
+from typing import List
 
 
 class InstanceClass(Enum):

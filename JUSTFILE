@@ -14,5 +14,11 @@ test:
 run:
     poetry run emre-config
 
-validate:
-    poetry run ruff check emre_config tests
+check:
+    poetry run ruff check emre_config tests 
+
+verify: check test
+
+lint: # autolint
+    poetry run ruff format emre_config tests
+    poetry run ruff check --fix emre_config tests

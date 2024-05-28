@@ -27,3 +27,20 @@ emre-config = "emre_config.cli:cli"
 [tool.pytest_env]
 RUN_ENV = 1
 AWS_DEFAULT_REGION = {value = "eu-central-1", skip_if_set = true}
+
+[tool.ruff]
+target-version = "py312"
+line-length = 110
+
+[tool.ruff.format]
+# Like Black, use double quotes for strings.
+quote-style = "double"
+
+# Like Black, indent with spaces, rather than tabs.
+indent-style = "space"
+
+# Like Black, respect magic trailing commas.
+skip-magic-trailing-comma = false
+
+# Like Black, automatically detect the appropriate line ending.
+line-ending = "auto"
