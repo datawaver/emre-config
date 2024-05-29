@@ -3,6 +3,7 @@ from emre_config.generator import (
 )
 from emre_config.parameters import AWSParameters, TargetFlowParameters
 
+EMR_IDLE_TIMEOUT_IN_SECONDS = 30 * 60
 
 def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> dict:
     config = ConfigGenerator(
@@ -50,7 +51,7 @@ def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> di
         ),
         Configurations=config.get_configurations(),
         AutoTerminationPolicy=dict(
-            IdleTimeout=30 * 60,
+            IdleTimeout=EMR_IDLE_TIMEOUT_IN_SECONDS,
         ),
     )
 

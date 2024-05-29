@@ -5,14 +5,20 @@ You have to provide some AWS resources from your VPC.
 
 ## Install
 
+FIrst clone the repository and install the package with pipx.
+
 ```bash
-$ pipx install git+https://github.com/dataweaver/emre/config.git
+git clone https://github.com/datawaver/emre-config.git
+cd emre-config
+pipx install .
 ```
 
-Uninstall
+Now you can use the command see below [USAGE section](#Usage).
+
+### Uninstall
 
 ```bash
-$ pipx uninstall emre-config
+pipx uninstall emre-config
 ```
 
 ## Usage
@@ -52,11 +58,20 @@ Provide a json file with the AWS resources you want to use. Here is an example:
 Assuming you have saved the file as `config.json`, you can run the command:
 
 ```bash
-emre-config --aws-config config.json --task-instances 4 --cluster-name my-emre-cluster
+emre-config --aws-config config.json --task-instances 2 --cluster-name my-emre-cluster
 ```
 
 
 ## Developing
+
+Easiest way to develop is to use the `devcontainer` in this repository. You can use the `Remote-Containers: Open Folder in Container` command in VSCode to open the project in a container.
+
+Install possible missing dependencies with:
+```
+just init
+```
+
+`just` gives you a list of possible commands you can run.
 
 ### Troubleshooting
 

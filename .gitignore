@@ -1,3 +1,6 @@
 .pytest_cache
 *.pyc
 .ruff_cache
+
+# sometimes you will create a aws_config.json file to test something
+aws_config.json

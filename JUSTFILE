@@ -7,8 +7,13 @@ default:
 
 init:
     poetry install
+    just check
     
 test:
+    poetry run pytest --without-slow-integration --without-integration
+
+# including integration tests, needs manual setup
+test-all:
     poetry run pytest
 
 run:
