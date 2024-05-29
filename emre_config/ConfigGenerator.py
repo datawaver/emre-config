@@ -32,12 +32,8 @@ class ConfigGenerator:
     task_instance_count: int = field(init=False)
 
     def __post_init__(self):
-        self.core_instance_cores = self._worker_instance_cores(
-            True, self.core_instance_size
-        )
-        self.task_instance_cores = self._worker_instance_cores(
-            False, self.task_instance_size
-        )
+        self.core_instance_cores = self._worker_instance_cores(True, self.core_instance_size)
+        self.task_instance_cores = self._worker_instance_cores(False, self.task_instance_size)
         self.task_instance_count = math.ceil(
             (self.worker_cores - self.core_instance_count * self.core_instance_cores)
             / self.task_instance_cores
@@ -73,23 +69,15 @@ class ConfigGenerator:
         launch_specifications: dict,
     ) -> dict:
         spot: bool = self.is_core_spot if core else self.is_task_spot
-        instance_count: int = (
-            self.core_instance_count if core else self.task_instance_count
-        )
-        instance_cores: int = (
-            self.core_instance_cores if core else self.task_instance_cores
-        )
-        instance_size: int = (
-            self.core_instance_size if core else self.task_instance_size
-        )
+        instance_count: int = self.core_instance_count if core else self.task_instance_count
+        instance_cores: int = self.core_instance_cores if core else self.task_instance_cores
+        instance_size: int = self.core_instance_size if core else self.task_instance_size
         return dict(
             InstanceFleetType="CORE" if core else "TASK",
             TargetOnDemandCapacity=instance_count * instance_cores if not spot else 0,
             TargetSpotCapacity=instance_count * instance_cores if spot else 0,
             InstanceTypeConfigs=[
-                self._worker_instance_configuration(
-                    instance_class, instance_size, instance_cores
-                )
+                self._worker_instance_configuration(instance_class, instance_size, instance_cores)
                 for instance_class in [ic.value for ic in InstanceClass]
             ],
             LaunchSpecifications=launch_specifications,
@@ -181,9 +169,7 @@ class ConfigGenerator:
         Returns:
             dict: The configuration for the worker instance.
         """
-        instance_type = (
-            f"{instance_class}.{instance_size if instance_size > 1 else ''}xlarge"
-        )
+        instance_type = f"{instance_class}.{instance_size if instance_size > 1 else ''}xlarge"
         volume_count, volume_size = cls._default_instance_storage(instance_size)
         return dict(
             InstanceType=instance_type,

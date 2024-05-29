@@ -1,9 +1,12 @@
-from emre_config.generator import (
+from ast import Dict
+from typing import Any
+from emre_config.ConfigGenerator import (
     ConfigGenerator,
 )
 from emre_config.parameters import AWSParameters, TargetFlowParameters
 
 EMR_IDLE_TIMEOUT_IN_SECONDS = 30 * 60
+
 
 def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> dict:
     config = ConfigGenerator(
@@ -14,7 +17,7 @@ def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> di
         worker_cores=target.target_worker_cores,
     )
 
-    return dict(
+    result: dict[str, Any] = dict(
         Name=target.cluster_name,
         ReleaseLabel="emr-7.0.0",
         Applications=[
@@ -34,9 +37,9 @@ def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> di
             KeepJobFlowAliveWhenNoSteps=True,
             TerminationProtected=False,
             Ec2SubnetIds=aws.ec2_subnet_ids,
-            EmrManagedMasterSecurityGroup=aws.security_group["EmrManagedMaster"],
-            EmrManagedSlaveSecurityGroup=aws.security_group["EmrManagedSlave"],
-            ServiceAccessSecurityGroup=aws.security_group["ServiceAccess"],
+            EmrManagedMasterSecurityGroup=aws.security_groups["EmrManagedMaster"],
+            EmrManagedSlaveSecurityGroup=aws.security_groups["EmrManagedSlave"],
+            ServiceAccessSecurityGroup=aws.security_groups["ServiceAccess"],
             InstanceFleets=[
                 config.instance_fleet_master(),
                 config.instance_fleet_worker(
@@ -54,7 +57,10 @@ def run_job_flow_request(target: TargetFlowParameters, aws: AWSParameters) -> di
             IdleTimeout=EMR_IDLE_TIMEOUT_IN_SECONDS,
         ),
     )
+    return remove_none_values(result)
 
 
-# emr = boto3.client("emr")
-# emr.run_job_flow(**run_job_flow_request)
+def remove_none_values(d: dict) -> dict:
+    if not isinstance(d, dict):
+        return d
+    return {k: remove_none_values(v) for k, v in d.items() if v is not None}

@@ -17,7 +17,7 @@ class TargetFlowParameters:
 @dataclass
 class AWSParameters:
     ec2_subnet_ids: List[str]
-    security_group: Dict[str, str]
+    security_groups: Dict[str, str]
     log_uri: str
     tags: List[Dict[str, str]]
     launch_specifications: Dict[str, str]
@@ -28,7 +28,7 @@ class AWSParameters:
             config = json.load(config_file)
             return AWSParameters(
                 ec2_subnet_ids=config["ec2_subnet_ids"],
-                security_group=config["security_group"],
+                security_groups=config["security_groups"],
                 log_uri=config["log_uri"],
                 tags=config["tags"],
                 launch_specifications=config["launch_specifications"],

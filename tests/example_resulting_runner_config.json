@@ -28,7 +28,6 @@
         ],
         "EmrManagedMasterSecurityGroup": "sg-00000000000000000",
         "EmrManagedSlaveSecurityGroup": "sg-11111111111111111",
-        "ServiceAccessSecurityGroup": "sg-aaaaaaaaaaaaaaaaa",
         "InstanceFleets": [
             {
                 "InstanceFleetType": "MASTER",

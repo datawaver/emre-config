@@ -31,10 +31,10 @@ Provide a json file with the AWS resources you want to use. Here is an example:
         "subnet-aaaaaaaaaaaaaaaaa",
         "subnet-bbbbbbbbbbbbbbbbb"
     ],
-    "security_group": {
+    "security_groups": {
         "EmrManagedMaster": "sg-00000000000000000",
         "EmrManagedSlave": "sg-11111111111111111",
-        "ServiceAccess": "sg-aaaaaaaaaaaaaaaaa"
+        "ServiceAccess": null
     },
     "log_uri": "s3://aws-logs-1234567890-eu-central-1/elasticmapreduce/",
     "tags": [
@@ -72,6 +72,10 @@ just init
 ```
 
 `just` gives you a list of possible commands you can run.
+
+### Tips and Tricks
+
+To get autocomplete for the `aws` command, execute: `complete -C '$(which aws_completer)' aws`
 
 ### Troubleshooting
 
